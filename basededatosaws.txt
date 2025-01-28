@@ -1,0 +1,6 @@
+identificador-> netflix-01
+usuario-> postgres
+contraseña-la mia
+
+netflix-01.cpi0y8k2ih4r.us-east-1.rds.amazonaws.com
+5432

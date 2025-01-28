@@ -1,0 +1,93 @@
+-Tabla de Imprentas:
+CREATE TABLE Imprentas (
+    id_imprenta NUMBER(5),
+    nombre VARCHAR2(100),
+    ubicacion VARCHAR2(255),
+    contacto VARCHAR2(100),
+    CONSTRAINT PK_Imprentas PRIMARY KEY (id_imprenta),
+    CONSTRAINT NN_Imprentas_nombre CHECK (nombre IS NOT NULL),
+    CONSTRAINT NN_Imprentas_ubicacion CHECK (ubicacion IS NOT NULL)
+);
+
+
+Tabla de Autores:
+CREATE TABLE Autores (
+    id_autor NUMBER(5),
+    nombre VARCHAR2(100),
+    pseudonimo VARCHAR2(100),
+    nacionalidad VARCHAR2(100),
+    CONSTRAINT PK_Autores PRIMARY KEY (id_autor),
+    CONSTRAINT NN_Autores_nombre CHECK (nombre IS NOT NULL),
+    CONSTRAINT NN_Autores_nacionalidad CHECK (nacionalidad IS NOT NULL)
+);
+
+Tabla de Editores:
+CREATE TABLE Editores (
+    id_editor NUMBER(5),
+    nombre VARCHAR2(100),
+    direccion VARCHAR2(255),
+    email VARCHAR2(100),
+    CONSTRAINT PK_Editores PRIMARY KEY (id_editor),
+    CONSTRAINT NN_Editores_nombre CHECK (nombre IS NOT NULL),
+    CONSTRAINT NN_Editores_direccion CHECK (direccion IS NOT NULL),
+    CONSTRAINT NN_Editores_email CHECK (email IS NOT NULL)
+);
+
+
+Tabla de Libros:
+CREATE TABLE Libros (
+    id_libro NUMBER(5),
+    titulo VARCHAR2(255),
+    estado VARCHAR2(50),
+    id_imprenta NUMBER(5),
+    id_editor NUMBER(5),
+    CONSTRAINT PK_Libros PRIMARY KEY (id_libro),
+    CONSTRAINT FK_Libros_Imprentas FOREIGN KEY (id_imprenta) REFERENCES Imprentas (id_imprenta),
+    CONSTRAINT FK_Libros_Editores FOREIGN KEY (id_editor) REFERENCES Editores (id_editor),
+    CONSTRAINT NN_Libros_titulo CHECK (titulo IS NOT NULL),
+    CONSTRAINT NN_Libros_estado CHECK (estado IS NOT NULL)
+);
+
+
+Tabla de Relación entre Autores y Libros:
+CREATE TABLE Autores_Libros (
+    id_autor NUMBER(5),
+    id_libro NUMBER(5),
+    CONSTRAINT PK_Autores_Libros PRIMARY KEY (id_autor, id_libro),
+    CONSTRAINT FK_Autores_Libros_Autores FOREIGN KEY (id_autor) REFERENCES Autores (id_autor),
+    CONSTRAINT FK_Autores_Libros_Libros FOREIGN KEY (id_libro) REFERENCES Libros (id_libro)
+);
+
+INSERTS:
+INSERT INTO Imprentas VALUES (1, 'Imprenta Central', 'Ciudad de México', 'contacto@imprentacentral.com');
+INSERT INTO Imprentas VALUES (2, 'Editorial PrintCo', 'Buenos Aires', 'info@printco.com');
+INSERT INTO Imprentas VALUES (3, 'Publicaciones Global', 'Madrid', 'global@publicaciones.com');
+
+
+
+INSERT INTO Autores VALUES (1, 'Gabriel García Márquez', 'Gabo', 'Colombiana');
+INSERT INTO Autores VALUES (2, 'J.K. Rowling', 'Robert Galbraith', 'Británica');
+INSERT INTO Autores VALUES (3, 'Isabel Allende', NULL, 'Chilena');
+INSERT INTO Autores VALUES (4, 'Stephen King', NULL, 'Estadounidense');
+
+
+
+INSERT INTO Editores VALUES (1, 'Carlos Mendoza', 'Av. Las Flores 123, Lima', 'cmendoza@editorialabc.com');
+INSERT INTO Editores VALUES (2, 'Lucía Fernández', 'Calle Palma 45, Madrid', 'lfernandez@editorialabc.com');
+INSERT INTO Editores VALUES (3, 'Ana González', 'Carrera 8 No. 15, Bogotá', 'agonzalez@editorialabc.com');
+
+INSERT INTO Libros VALUES (1, 'Cien años de soledad', 'Publicado', 1, 1);
+INSERT INTO Libros VALUES (2, 'Harry Potter y la piedra filosofal', 'En revisión', 2, 2);
+INSERT INTO Libros VALUES (3, 'La casa de los espíritus', 'Publicado', 3, 1);
+INSERT INTO Libros VALUES (4, 'El resplandor', 'Publicado', 2, 3);
+
+
+INSERT INTO Autores_Libros VALUES (1, 1);
+INSERT INTO Autores_Libros VALUES (2, 2);
+INSERT INTO Autores_Libros VALUES (3, 3); 
+INSERT INTO Autores_Libros VALUES (4, 4);
+INSERT INTO Autores_Libros VALUES (2, 4); 
+
+
+
+
